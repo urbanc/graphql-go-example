@@ -11,6 +11,7 @@ To run this project you need to:
 - install postgresql (for ubuntu follow [this guide](https://help.ubuntu.com/community/PostgreSQL)). For this application, I created a postgresql user called `vagrant` with `vagrant` as password and the database called `graphql`, but of course you can change these settings in `./migrate.sh` and in `./main.go` files.
 - install [mattes/migrate](https://github.com/mattes/migrate) which is a tool to create and run migrations against sql databases.
 - run the migrations which will create the database tables and indexes `./migrate.sh up`. If you ever want to clean up the the database run `./migrate.sh down` then `./migrate.sh up` again.
+- run GraphQL server with command `go run *.go`
 
 ## Commands
 
