@@ -9,6 +9,7 @@ import (
 
 	"github.com/graphql-go/graphql"
 	_ "github.com/lib/pq"
+	"fmt"
 )
 
 func handler(schema graphql.Schema) http.HandlerFunc {
@@ -43,5 +44,9 @@ func main() {
 		log.Fatal(err)
 	}
 	http.Handle("/graphql", handler(schema))
-	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
+
+	serverAndPort := "0.0.0.0:8080"
+	fmt.Printf("Listen on %s", serverAndPort)
+
+	log.Fatal(http.ListenAndServe(serverAndPort, nil))
 }
