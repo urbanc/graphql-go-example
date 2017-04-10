@@ -36,3 +36,8 @@ curl -XPOST http://vm:8080/graphql -d '{user(id:1){post(id:2){title,body}}}'
 curl -XPOST http://vm:8080/graphql -d '{user(id:1){posts{id,title,body}}}'
 curl -XPOST http://vm:8080/graphql -d '{user(id:1){post(id:2){user{id,email}}}}'
 ```
+
+## Postgres problems
+1. if you get `pq: SSL is not enabled on the server` error just add `?sslmode=disable` into main.go at sql.Open line
+
+    e.g `db, err = sql.Open("postgres", "postgres://vagrant:vagrant@localhost:5432/graphql?sslmode=disable")`
