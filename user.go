@@ -1,11 +1,14 @@
 package main
 
+import "log"
+
 type User struct {
 	ID    int
 	Email string
 }
 
 func InsertUser(user *User) error {
+	log.Println("InsertUser called ...")
 	var id int
 	err := db.QueryRow(`
 		INSERT INTO users(email)
@@ -20,6 +23,7 @@ func InsertUser(user *User) error {
 }
 
 func GetUserByID(id int) (*User, error) {
+	log.Println("GetUserByID called ...")
 	var email string
 	err := db.QueryRow("SELECT email FROM users WHERE id=$1", id).Scan(&email)
 	if err != nil {
@@ -32,11 +36,13 @@ func GetUserByID(id int) (*User, error) {
 }
 
 func RemoveUserByID(id int) error {
+	log.Println("RemoveUserByID called ...")
 	_, err := db.Exec("DELETE FROM users WHERE id=$1", id)
 	return err
 }
 
 func Follow(followerID, followeeID int) error {
+	log.Println("Follow called ...")
 	_, err := db.Exec(`
 		INSERT INTO followers(follower_id, followee_id)
 		VALUES ($1, $2)
@@ -45,6 +51,7 @@ func Follow(followerID, followeeID int) error {
 }
 
 func Unfollow(followerID, followeeID int) error {
+	log.Println("Unfollow called ...")
 	_, err := db.Exec(`
 		DELETE FROM followers
 		WHERE follower_id=$1
@@ -54,6 +61,7 @@ func Unfollow(followerID, followeeID int) error {
 }
 
 func GetFollowerByIDAndUser(id int, userID int) (*User, error) {
+	log.Println("GetFollowerByIDAndUser called ...")
 	var email string
 	err := db.QueryRow(`
 		SELECT u.email
@@ -73,6 +81,7 @@ func GetFollowerByIDAndUser(id int, userID int) (*User, error) {
 }
 
 func GetFollowersForUser(id int) ([]*User, error) {
+	log.Println("GetFollowersForUser called ...")
 	rows, err := db.Query(`
 		SELECT u.id, u.email
 		FROM users AS u, followers AS f
@@ -98,6 +107,7 @@ func GetFollowersForUser(id int) ([]*User, error) {
 }
 
 func GetFolloweeByIDAndUser(id int, userID int) (*User, error) {
+	log.Println("GetFolloweeByIDAndUser called ...")
 	var email string
 	err := db.QueryRow(`
 		SELECT u.email
@@ -117,6 +127,7 @@ func GetFolloweeByIDAndUser(id int, userID int) (*User, error) {
 }
 
 func GetFolloweesForUser(id int) ([]*User, error) {
+	log.Println("GetFolloweesForUser called ...")
 	rows, err := db.Query(`
 		SELECT u.id, u.email
 		FROM users AS u, followers AS f

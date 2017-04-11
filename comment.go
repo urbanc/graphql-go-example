@@ -1,5 +1,7 @@
 package main
 
+import "log"
+
 type Comment struct {
 	ID     int
 	UserID int
@@ -9,6 +11,8 @@ type Comment struct {
 }
 
 func InsertComment(comment *Comment) error {
+	log.Println("InsertComment called ...")
+
 	var id int
 	err := db.QueryRow(`
 		INSERT INTO comments(user_id, post_id, title, body)
@@ -23,11 +27,13 @@ func InsertComment(comment *Comment) error {
 }
 
 func RemoveCommentByID(id int) error {
+	log.Println("RemoveCommentByID called ...")
 	_, err := db.Exec("DELETE FROM comments WHERE id=$1", id)
 	return err
 }
 
 func GetCommentByIDAndPost(id int, postID int) (*Comment, error) {
+	log.Println("GetCommentByIDAndPost called ...")
 	var (
 		userID      int
 		title, body string
@@ -51,6 +57,7 @@ func GetCommentByIDAndPost(id int, postID int) (*Comment, error) {
 }
 
 func GetCommentsForPost(id int) ([]*Comment, error) {
+	log.Println("GetCommentsForPost called ...")
 	rows, err := db.Query(`
 		SELECT c.id, c.user_id, c.title, c.body
 		FROM comments AS c

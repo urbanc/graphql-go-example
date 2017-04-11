@@ -1,5 +1,7 @@
 package main
 
+import "log"
+
 type Post struct {
 	ID     int
 	UserID int
@@ -8,6 +10,7 @@ type Post struct {
 }
 
 func InsertPost(post *Post) error {
+	log.Println("InsertPost called ...")
 	var id int
 	err := db.QueryRow(`
 		INSERT INTO posts(user_id, title, body)
@@ -22,11 +25,13 @@ func InsertPost(post *Post) error {
 }
 
 func RemovePostByID(id int) error {
+	log.Println("RemovePostByID called ...")
 	_, err := db.Exec("DELETE FROM posts WHERE id=$1", id)
 	return err
 }
 
 func GetPostByID(id int) (*Post, error) {
+	log.Println("GetPostByID called ...")
 	var (
 		userID      int
 		title, body string
@@ -48,6 +53,7 @@ func GetPostByID(id int) (*Post, error) {
 }
 
 func GetPostByIDAndUser(id, userID int) (*Post, error) {
+	log.Println("GetPostByIDAndUser called ...")
 	var title, body string
 	err := db.QueryRow(`
 		SELECT title, body
@@ -67,6 +73,7 @@ func GetPostByIDAndUser(id, userID int) (*Post, error) {
 }
 
 func GetPostsForUser(id int) ([]*Post, error) {
+	log.Println("GetPostsForUser called ...")
 	rows, err := db.Query(`
 		SELECT p.id, p.title, p.body
 		FROM posts AS p
