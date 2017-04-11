@@ -35,6 +35,10 @@ curl -XPOST http://vm:8080/graphql -d 'mutation {removePost(id:1)}'
 curl -XPOST http://vm:8080/graphql -d '{user(id:1){post(id:2){title,body}}}'
 curl -XPOST http://vm:8080/graphql -d '{user(id:1){posts{id,title,body}}}'
 curl -XPOST http://vm:8080/graphql -d '{user(id:1){post(id:2){user{id,email}}}}'
+
+# get list of all users
+curl -XPOST http://vm:8080/graphql -d '{allUsers{id email}}'
+
 ```
 
 ## Postgres problems

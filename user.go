@@ -7,6 +7,31 @@ type User struct {
 	Email string
 }
 
+func AllUsers() ([]User, error) {
+	log.Println("AllUsers called ...")
+	rows, err := db.Query("SELECT id, email FROM users")
+
+	if err != nil {
+		return nil, err
+	}
+
+	var list []User
+	for rows.Next() {
+		var data User
+		if err := rows.Scan(&data.ID, &data.Email); err != nil {
+			log.Fatal(err)
+		}
+
+		list = append(list, data)
+	}
+
+	if rows.Err() != nil {
+		log.Fatal(err)
+	}
+
+	return list, nil
+}
+
 func InsertUser(user *User) error {
 	log.Println("InsertUser called ...")
 	var id int

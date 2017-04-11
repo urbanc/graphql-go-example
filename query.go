@@ -9,6 +9,19 @@ import (
 var QueryType = graphql.NewObject(graphql.ObjectConfig{
 	Name: "Query",
 	Fields: graphql.Fields{
+		"allUsers": &graphql.Field{
+			Type:        graphql.NewList(UserType),
+			Description: "List of users",
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				list, err := AllUsers()
+				if err != nil {
+					return nil, err
+				}
+
+				return list, nil
+			},
+		},
+
 		"user": &graphql.Field{
 			Type: UserType,
 			Args: graphql.FieldConfigArgument{

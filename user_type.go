@@ -11,17 +11,28 @@ var UserType = graphql.NewObject(graphql.ObjectConfig{
 	Fields: graphql.Fields{
 		"id": &graphql.Field{
 			Type: graphql.NewNonNull(graphql.ID),
+			//TODO - check why AllUsers not working with this(pointer vs value)
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				if user, ok := p.Source.(*User); ok == true {
 					return user.ID, nil
 				}
+
+				if user, ok := p.Source.(User); ok == true {
+					return user.ID, nil
+				}
+
 				return nil, nil
 			},
 		},
 		"email": &graphql.Field{
 			Type: graphql.NewNonNull(graphql.String),
+			//TODO - check why AllUsers not working with this
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				if user, ok := p.Source.(*User); ok == true {
+					return user.Email, nil
+				}
+
+				if user, ok := p.Source.(User); ok == true {
 					return user.Email, nil
 				}
 				return nil, nil
