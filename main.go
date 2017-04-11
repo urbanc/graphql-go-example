@@ -43,6 +43,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	err = db.Ping()
+	if err != nil {
+		log.Fatal("Error: Could not establish a connection with the database")
+	}
+
 	http.Handle("/graphql", handler(schema))
 
 	serverAndPort := "0.0.0.0:8080"
