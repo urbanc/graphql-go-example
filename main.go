@@ -3,13 +3,13 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 
 	"github.com/graphql-go/graphql"
 	_ "github.com/lib/pq"
-	"fmt"
 )
 
 func handler(schema graphql.Schema) http.HandlerFunc {

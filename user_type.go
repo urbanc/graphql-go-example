@@ -38,6 +38,10 @@ var UserType = graphql.NewObject(graphql.ObjectConfig{
 				return nil, nil
 			},
 		},
+
+		"posts": &graphql.Field{
+			Type: graphql.NewList(PostType),
+		},
 	},
 })
 

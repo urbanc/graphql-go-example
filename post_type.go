@@ -15,6 +15,10 @@ var PostType = graphql.NewObject(graphql.ObjectConfig{
 				if post, ok := p.Source.(*Post); ok == true {
 					return post.ID, nil
 				}
+
+				if post, ok := p.Source.(Post); ok == true {
+					return post.ID, nil
+				}
 				return nil, nil
 			},
 		},
@@ -24,6 +28,10 @@ var PostType = graphql.NewObject(graphql.ObjectConfig{
 				if post, ok := p.Source.(*Post); ok == true {
 					return post.Title, nil
 				}
+
+				if post, ok := p.Source.(Post); ok == true {
+					return post.Title, nil
+				}
 				return nil, nil
 			},
 		},
@@ -31,6 +39,10 @@ var PostType = graphql.NewObject(graphql.ObjectConfig{
 			Type: graphql.NewNonNull(graphql.ID),
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				if post, ok := p.Source.(*Post); ok == true {
+					return post.Body, nil
+				}
+
+				if post, ok := p.Source.(Post); ok == true {
 					return post.Body, nil
 				}
 				return nil, nil
@@ -44,6 +56,10 @@ func init() {
 		Type: graphql.NewNonNull(UserType),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			if post, ok := p.Source.(*Post); ok == true {
+				return GetUserByID(post.UserID)
+			}
+
+			if post, ok := p.Source.(Post); ok == true {
 				return GetUserByID(post.UserID)
 			}
 			return nil, nil
@@ -67,6 +83,10 @@ func init() {
 		Type: graphql.NewNonNull(graphql.NewList(graphql.NewNonNull(CommentType))),
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			if post, ok := p.Source.(*Post); ok == true {
+				return GetCommentsForPost(post.ID)
+			}
+
+			if post, ok := p.Source.(Post); ok == true {
 				return GetCommentsForPost(post.ID)
 			}
 			return []Comment{}, nil

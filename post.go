@@ -9,6 +9,31 @@ type Post struct {
 	Body   string
 }
 
+func AllPosts() ([]Post, error) {
+	log.Println("AllPosts called ...")
+	rows, err := db.Query("SELECT id, user_id, title, body FROM posts")
+
+	if err != nil {
+		return nil, err
+	}
+
+	var list []Post
+	for rows.Next() {
+		var data Post
+		if err := rows.Scan(&data.ID, &data.UserID, &data.Title, &data.Body); err != nil {
+			log.Fatal(err)
+		}
+
+		list = append(list, data)
+	}
+
+	if rows.Err() != nil {
+		log.Fatal(err)
+	}
+
+	return list, nil
+}
+
 func InsertPost(post *Post) error {
 	log.Println("InsertPost called ...")
 	var id int

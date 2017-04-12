@@ -22,6 +22,19 @@ var QueryType = graphql.NewObject(graphql.ObjectConfig{
 			},
 		},
 
+		"allPosts": &graphql.Field{
+			Type:        graphql.NewList(PostType),
+			Description: "List of posts",
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				list, err := AllPosts()
+				if err != nil {
+					return nil, err
+				}
+
+				return list, nil
+			},
+		},
+
 		"user": &graphql.Field{
 			Type: UserType,
 			Args: graphql.FieldConfigArgument{
