@@ -51,7 +51,7 @@ func main() {
 
 	http.Handle("/graphql", handler(schema))
 
-	serverAndPort := "0.0.0.0:8080"
+	serverAndPort := "127.0.0.1:8080"
 	fmt.Printf("Listen on %s", serverAndPort)
 
 	log.Fatal(http.ListenAndServe(serverAndPort, nil))
