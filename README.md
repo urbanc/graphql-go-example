@@ -15,7 +15,7 @@ To run this project you need to:
 
 ## GraphiQL - [https://github.com/graphql/graphiql]()
 
-An in-browser IDE for exploring GraphQL.
+An in-browser IDE for exploring GraphQL access via GraphQL server `http://localhost:8080/` 
 
 Chome extension UNOFFICIAL! - [https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij]()
 
