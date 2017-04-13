@@ -2,9 +2,9 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 	"net/http"
+	"net/http/httputil"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
@@ -12,6 +12,22 @@ import (
 )
 
 var db *sql.DB
+
+func logMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("%s %s %s\n", r.RemoteAddr, r.Method, r.URL)
+
+		dump, err := httputil.DumpRequest(r, true)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Printf("request body: %s", dump)
+
+		next.ServeHTTP(w, r)
+
+	})
+}
 
 func main() {
 	schema, err := graphql.NewSchema(graphql.SchemaConfig{
@@ -36,14 +52,14 @@ func main() {
 		Pretty: true,
 	})
 
-	http.Handle("/graphql", h)
+	http.Handle("/graphql", logMiddleware((h)))
 
 	// serve a graphiql IDE
 	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/", fs)
 
 	serverAndPort := "127.0.0.1:8080"
-	fmt.Printf("Listen on %s", serverAndPort)
+	log.Printf("Listen on %s\n", serverAndPort)
 
 	log.Fatal(http.ListenAndServe(serverAndPort, nil))
 }
