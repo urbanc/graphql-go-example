@@ -89,8 +89,7 @@ $(function (global) {
             "#\n" +
             "# Press the run button above, or Cmd-Enter to execute the query, and the result\n" +
             "# will appear in the pane to the right.\n\n" +
-            "query RebelsShipsQuery {\n  rebels {\n    name\n    ships(first: 1) {\n      edges {\n" +
-            "        node {\n          name \n        }\n      }\n    }\n  }\n}"
+            "{\n  allPosts {\n    id\n    title\n    user {\n     id\n      email\n   },\n  comments {\n    id\n    title\n     body\n   }\n }\n}"
         }, toolbar),
         elem
     );
