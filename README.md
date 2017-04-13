@@ -51,3 +51,7 @@ curl -XPOST http://localhost:8080/graphql -H 'Content-Type:application/graphql' 
 1. if you get `pq: SSL is not enabled on the server` error just add `?sslmode=disable` into main.go at sql.Open line
 
     e.g `db, err = sql.Open("postgres", "postgres://vagrant:vagrant@localhost:5432/graphql?sslmode=disable")`
+
+## TODO
+- [ ] move server into Docker
+- [ ] move PostgreSQL into Docker
