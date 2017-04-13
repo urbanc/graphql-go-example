@@ -38,6 +38,10 @@ func main() {
 
 	http.Handle("/graphql", h)
 
+	// serve a graphiql IDE
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/", fs)
+
 	serverAndPort := "127.0.0.1:8080"
 	fmt.Printf("Listen on %s", serverAndPort)
 
