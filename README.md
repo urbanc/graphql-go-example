@@ -13,11 +13,11 @@ To run this project you need to:
 - run the migrations which will create the database tables and indexes `./migrate.sh up`. If you ever want to clean up the the database run `./migrate.sh down` then `./migrate.sh up` again.
 - run GraphQL server with command `go run *.go`
 
-## GraphiQL - [https://github.com/graphql/graphiql]()
+## GraphiQL - [https://github.com/graphql/graphiql](https://github.com/graphql/graphiql)
 
 An in-browser IDE for exploring GraphQL access via GraphQL server `http://localhost:8080/` 
 
-Chome extension UNOFFICIAL! - [https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij]()
+Chome extension UNOFFICIAL! - [https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij](https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij)
 
 ## Commands
 
