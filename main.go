@@ -37,7 +37,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db, err = sql.Open("postgres", "postgres://vagrant:vagrant@localhost:5432/graphql")
+	db, err = sql.Open("postgres", "postgres://vagrant:vagrant@localhost:5432/graphql?sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
