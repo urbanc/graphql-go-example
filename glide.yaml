@@ -1,4 +1,6 @@
 package: learn/graphql-go-example
 import:
 - package: github.com/graphql-go/graphql
-  version: v0.4.18
+  version: v0.6.0
+- package: github.com/mattes/migrate
+  version: v1.3.0
