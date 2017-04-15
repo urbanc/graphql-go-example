@@ -8,7 +8,7 @@ To run this project you need to:
 - install golang, see [this guide](https://golang.org/doc/install)
 - install [Masterminds/glide](https://github.com/Masterminds/glide) which is a package manager for golang projects.
 - install all the dependencies for this project: `glide install`, glide will store all dependencies in `/vendor` folder.
-- install postgresql (for ubuntu follow [this guide](https://help.ubuntu.com/community/PostgreSQL)). For this application, I created a postgresql user called `vagrant` with `vagrant` as password and the database called `graphql`, but of course you can change these settings in `./migrate.sh` and in `./main.go` files.
+- install postgresql with [docker](https://www.docker.com/community-edition#/download) (run `docker-compose up -d`). For this application, I created a postgresql user called `vagrant` with `vagrant` as password and the database called `graphql`, but of course you can change these settings in `./migrate.sh` and in `./main.go` files.
 - install [mattes/migrate](https://github.com/mattes/migrate) which is a tool to create and run migrations against sql databases.
 - run the migrations which will create the database tables and indexes `./migrate.sh up`. If you ever want to clean up the the database run `./migrate.sh down` then `./migrate.sh up` again.
 - run GraphQL server with command `go run *.go`
@@ -47,11 +47,6 @@ curl -XPOST http://localhost:8080/graphql -H 'Content-Type:application/graphql' 
 
 ```
 
-## Postgres problems
-1. if you get `pq: SSL is not enabled on the server` error just add `?sslmode=disable` into main.go at sql.Open line
-
-    e.g `db, err = sql.Open("postgres", "postgres://vagrant:vagrant@localhost:5432/graphql?sslmode=disable")`
-
 ## TODO
 - [ ] move server into Docker
-- [ ] move PostgreSQL into Docker
+- [x] move PostgreSQL into Docker
