@@ -1,6 +1,8 @@
-hash: b2711a7e432049eb3a7c54a975ba24f3aa9489e08019ec51978b41966ba20f3a
-updated: 2017-04-15T14:08:46.781096088+02:00
+hash: 96ba2e5d2b4f57cc8747b4cae28722e989a4025a4ee17347d88fd2ec475d9209
+updated: 2017-04-17T20:32:34.602368787+02:00
 imports:
+- name: github.com/base-dev/relay
+  version: 00e3a4622359c4642d130e8648583d8055deb1d1
 - name: github.com/graphql-go/graphql
   version: e13376c2344b5694a62b7cf6cd8b543c813cd5ee
   subpackages:
@@ -21,7 +23,7 @@ imports:
   subpackages:
   - oid
 - name: github.com/mattes/migrate
-  version: 4cfc0444892a8cfb1978c54eda5584d52650b019
+  version: ce1b59bb819416ca67422929b1cb48bb342720b6
 - name: golang.org/x/net
   version: 8fd7f25955530b92e73e9e1932a41b522b22ccd9
   subpackages:
