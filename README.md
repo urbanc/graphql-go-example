@@ -50,3 +50,6 @@ curl -XPOST http://localhost:8080/graphql -H 'Content-Type:application/graphql' 
 ## TODO
 - [ ] move server into Docker
 - [x] move PostgreSQL into Docker
+- [ ] add [Relay](https://facebook.github.io/relay/) support
+- [ ] check duplicated resolve logic
+- [ ] add Makefile
