@@ -1,6 +1,21 @@
-hash: 96ba2e5d2b4f57cc8747b4cae28722e989a4025a4ee17347d88fd2ec475d9209
-updated: 2017-04-17T20:32:34.602368787+02:00
+hash: 311f735b1645f9de4477eeb4cbfb7e8dd45da4fe9cf3a12f4e1ce01779b0e8ac
+updated: 2017-04-18T09:30:21.530441904+02:00
 imports:
+- name: github.com/base-dev/graphql
+  version: 80525db523b62c56a44c3d07b56eb10085d2db55
+  subpackages:
+  - gqlerrors
+  - language/ast
+  - language/kinds
+  - language/lexer
+  - language/location
+  - language/parser
+  - language/printer
+  - language/source
+  - language/typeInfo
+  - language/visitor
+- name: github.com/base-dev/handler
+  version: 1ea67efb4947b4e03a7a98c854dbdeb28bcf74d2
 - name: github.com/base-dev/relay
   version: 00e3a4622359c4642d130e8648583d8055deb1d1
 - name: github.com/graphql-go/graphql
@@ -16,8 +31,6 @@ imports:
   - language/source
   - language/typeInfo
   - language/visitor
-- name: github.com/graphql-go/handler
-  version: 07e3dd439c1f4ec14e685af7c48e8863bcc42c9d
 - name: github.com/lib/pq
   version: 2704adc878c21e1329f46f6e56a1c387d788ff94
   subpackages:

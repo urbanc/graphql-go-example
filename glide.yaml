@@ -5,3 +5,4 @@ import:
 - package: github.com/mattes/migrate
   version: v1.3.0
 - package: github.com/base-dev/relay
+- package: github.com/base-dev/handler
