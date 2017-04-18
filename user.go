@@ -1,28 +1,50 @@
 package main
 
-import "log"
+import (
+	"fmt"
+	"log"
+	"strconv"
+)
 
 type User struct {
 	ID    int
 	Email string
 }
 
-func AllUsers() ([]User, error) {
-	log.Println("AllUsers called ...")
-	rows, err := db.Query("SELECT id, email FROM users")
+// only after argument example
+type Arguments struct {
+	After string
+}
 
+func AllUsers(args Arguments) ([]*User, error) {
+	log.Println("AllUsers called ...")
+	db := InitDB()
+
+	query := "SELECT id, email FROM users"
+	if args.After != "" {
+		id, err := strconv.Atoi(args.After)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		query += fmt.Sprintf(" WHERE id > %d", id)
+	}
+
+	rows, err := db.Query(query)
 	if err != nil {
+		log.Fatal(err)
 		return nil, err
 	}
 
-	var list []User
+	var list []*User
+	log.Printf("list users: %#v", list)
 	for rows.Next() {
 		var data User
 		if err := rows.Scan(&data.ID, &data.Email); err != nil {
 			log.Fatal(err)
 		}
 
-		list = append(list, data)
+		list = append(list, &data)
 	}
 
 	if rows.Err() != nil {
@@ -34,6 +56,8 @@ func AllUsers() ([]User, error) {
 
 func InsertUser(user *User) error {
 	log.Println("InsertUser called ...")
+	db := InitDB()
+
 	var id int
 	err := db.QueryRow(`
 		INSERT INTO users(email)
@@ -49,6 +73,8 @@ func InsertUser(user *User) error {
 
 func GetUserByID(id int) (*User, error) {
 	log.Println("GetUserByID called ...")
+	db := InitDB()
+
 	var email string
 	err := db.QueryRow("SELECT email FROM users WHERE id=$1", id).Scan(&email)
 	if err != nil {
@@ -62,12 +88,16 @@ func GetUserByID(id int) (*User, error) {
 
 func RemoveUserByID(id int) error {
 	log.Println("RemoveUserByID called ...")
+	db := InitDB()
+
 	_, err := db.Exec("DELETE FROM users WHERE id=$1", id)
 	return err
 }
 
 func Follow(followerID, followeeID int) error {
 	log.Println("Follow called ...")
+	db := InitDB()
+
 	_, err := db.Exec(`
 		INSERT INTO followers(follower_id, followee_id)
 		VALUES ($1, $2)
@@ -77,6 +107,8 @@ func Follow(followerID, followeeID int) error {
 
 func Unfollow(followerID, followeeID int) error {
 	log.Println("Unfollow called ...")
+	db := InitDB()
+
 	_, err := db.Exec(`
 		DELETE FROM followers
 		WHERE follower_id=$1
@@ -87,6 +119,8 @@ func Unfollow(followerID, followeeID int) error {
 
 func GetFollowerByIDAndUser(id int, userID int) (*User, error) {
 	log.Println("GetFollowerByIDAndUser called ...")
+	db := InitDB()
+
 	var email string
 	err := db.QueryRow(`
 		SELECT u.email
@@ -107,6 +141,8 @@ func GetFollowerByIDAndUser(id int, userID int) (*User, error) {
 
 func GetFollowersForUser(id int) ([]*User, error) {
 	log.Println("GetFollowersForUser called ...")
+	db := InitDB()
+
 	rows, err := db.Query(`
 		SELECT u.id, u.email
 		FROM users AS u, followers AS f
@@ -133,6 +169,8 @@ func GetFollowersForUser(id int) ([]*User, error) {
 
 func GetFolloweeByIDAndUser(id int, userID int) (*User, error) {
 	log.Println("GetFolloweeByIDAndUser called ...")
+	db := InitDB()
+
 	var email string
 	err := db.QueryRow(`
 		SELECT u.email
@@ -153,6 +191,8 @@ func GetFolloweeByIDAndUser(id int, userID int) (*User, error) {
 
 func GetFolloweesForUser(id int) ([]*User, error) {
 	log.Println("GetFolloweesForUser called ...")
+	db := InitDB()
+
 	rows, err := db.Query(`
 		SELECT u.id, u.email
 		FROM users AS u, followers AS f

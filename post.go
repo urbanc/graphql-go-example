@@ -11,6 +11,8 @@ type Post struct {
 
 func AllPosts() ([]Post, error) {
 	log.Println("AllPosts called ...")
+	db := InitDB()
+
 	rows, err := db.Query("SELECT id, user_id, title, body FROM posts")
 
 	if err != nil {
@@ -36,6 +38,8 @@ func AllPosts() ([]Post, error) {
 
 func InsertPost(post *Post) error {
 	log.Println("InsertPost called ...")
+	db := InitDB()
+
 	var id int
 	err := db.QueryRow(`
 		INSERT INTO posts(user_id, title, body)
@@ -51,12 +55,16 @@ func InsertPost(post *Post) error {
 
 func RemovePostByID(id int) error {
 	log.Println("RemovePostByID called ...")
+	db := InitDB()
+
 	_, err := db.Exec("DELETE FROM posts WHERE id=$1", id)
 	return err
 }
 
 func GetPostByID(id int) (*Post, error) {
 	log.Println("GetPostByID called ...")
+	db := InitDB()
+
 	var (
 		userID      int
 		title, body string
@@ -79,6 +87,8 @@ func GetPostByID(id int) (*Post, error) {
 
 func GetPostByIDAndUser(id, userID int) (*Post, error) {
 	log.Println("GetPostByIDAndUser called ...")
+	db := InitDB()
+
 	var title, body string
 	err := db.QueryRow(`
 		SELECT title, body
@@ -99,6 +109,8 @@ func GetPostByIDAndUser(id, userID int) (*Post, error) {
 
 func GetPostsForUser(id int) ([]*Post, error) {
 	log.Println("GetPostsForUser called ...")
+	db := InitDB()
+
 	rows, err := db.Query(`
 		SELECT p.id, p.title, p.body
 		FROM posts AS p

@@ -12,6 +12,7 @@ type Comment struct {
 
 func InsertComment(comment *Comment) error {
 	log.Println("InsertComment called ...")
+	db := InitDB()
 
 	var id int
 	err := db.QueryRow(`
@@ -28,12 +29,16 @@ func InsertComment(comment *Comment) error {
 
 func RemoveCommentByID(id int) error {
 	log.Println("RemoveCommentByID called ...")
+	db := InitDB()
+
 	_, err := db.Exec("DELETE FROM comments WHERE id=$1", id)
 	return err
 }
 
 func GetCommentByIDAndPost(id int, postID int) (*Comment, error) {
 	log.Println("GetCommentByIDAndPost called ...")
+	db := InitDB()
+
 	var (
 		userID      int
 		title, body string
@@ -58,6 +63,8 @@ func GetCommentByIDAndPost(id int, postID int) (*Comment, error) {
 
 func GetCommentsForPost(id int) ([]*Comment, error) {
 	log.Println("GetCommentsForPost called ...")
+	db := InitDB()
+
 	rows, err := db.Query(`
 		SELECT c.id, c.user_id, c.title, c.body
 		FROM comments AS c
